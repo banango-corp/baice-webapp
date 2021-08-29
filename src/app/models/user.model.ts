@@ -1,7 +1,10 @@
+import { Post } from "./post.model";
+
 export class User {
   private username: string;
   private followerCount: number;
   private followingCount: number;
+  private posts: Post[] = [];
 
   //TODO: Adicionar lista de seguidores
   // private followers: number[]; // Array de IDs?
@@ -25,14 +28,32 @@ export class User {
     return this.followingCount;
   }
 
-  public follow() {
+  public follow(): void {
     this.followerCount++;
   }
 
-  public unfollow() {
+  public unfollow(): void {
     if (this.followerCount > 0) {
       this.followerCount--;
     }
+  }
+
+  public getPosts(): Post[] {
+    return this.posts;
+  }
+
+  public post(audioURL: string) {
+    let newPost = new Post(audioURL);
+    this.posts.push(newPost);
+  }
+
+  public deletePost(id: number): boolean {
+    let postIndex = this.posts.findIndex(post => post.getId() === id);
+    if (postIndex != -1) {
+      this.posts.splice(postIndex, 1);
+      return true;
+    }
+    return false;
   }
 
 }

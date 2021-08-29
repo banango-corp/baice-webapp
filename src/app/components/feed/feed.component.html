@@ -1,0 +1,20 @@
+<h1>{{ user.getUsername() }}</h1>
+<div style="display: flex;">
+  <p style="margin-right: 16px;">Followers: {{ user.getFollowerCount() }}</p>
+  <p>Following: {{ user.getFollowingCount() }}</p>
+</div>
+
+<div style="display: flex;">
+  <button style="margin-right: 16px;" (click)="user.follow()">Follow</button>
+  <button (click)="user.unfollow()">Unfollow</button>
+</div>
+
+<div>
+  <button (click)="user.post('random audio')">Add Audio</button>
+</div>
+
+<div>
+  <div *ngFor="let post of user.getPosts()">
+    <post [post]="post" (onDelete)="user.deletePost($event)"></post>
+  </div>
+</div>

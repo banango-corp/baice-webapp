@@ -1,0 +1,10 @@
+<div>
+  <p>{{ post.getAudio() }} - {{ post.getId() }}</p>
+  <p>{{ post.getLikesCount() }} likes | {{ post.getDislikesCount() }} dislikes </p>
+
+  <div style="display: flex;">
+    <button style="margin-right: 5px;" (click)="delete()">Delete Post</button>
+    <button style="margin-right: 5px;" (click)="post.like()">Like</button>
+    <button (click)="post.dislike()">Dislike</button>
+  </div>
+</div>
