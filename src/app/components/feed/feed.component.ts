@@ -9,12 +9,18 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class FeedComponent implements OnInit {
   public user: User;
+  public audioUrl: string = '';
 
   constructor(private userService: UserService) {
     this.user = this.userService.getUser();
   }
 
   ngOnInit(): void {
+  }
+
+  public post() {
+    this.user.post(this.audioUrl);
+    this.audioUrl = '';
   }
 
 }
