@@ -1,22 +1,23 @@
-<div style="display: flex;">
-
-  <div style="padding: 0 16px;">
-    <h1>{{ user.getUsername() }}</h1>
-    <div style="display: flex;">
-      <p style="margin-right: 16px;">Followers: {{ user.getFollowerCount() }}</p>
-      <p>Following: {{ user.getFollowingCount() }}</p>
-    </div>
-  </div>
-
-  <div style="padding: 0 16px; border-left: 1px solid gray;">
-    <div style="margin-top: 16px;">
-      <input type="text" placeholder="O que está pensando?" [(ngModel)]="audioUrl"/>
-      <button  style="margin-left: 5px;" [disabled]="audioUrl.length === 0" (click)="post()">Post</button>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <h1>{{ user.getUsername() }}</h1>
+      <div>
+        <p style="margin-right: 16px;">Followers: {{ user.getFollowerCount() }}</p>
+        <p>Following: {{ user.getFollowingCount() }}</p>
+      </div>
     </div>
 
-    <div>
-      <div *ngFor="let post of user.getPosts()">
-        <post [post]="post" (onDelete)="user.deletePost($event)"></post>
+    <div class="col-6" style="border-left: 1px solid gray;">
+      <div style="margin-top: 16px;">
+        <input type="text" placeholder="O que está pensando?" [(ngModel)]="audioUrl"/>
+        <button  style="margin-left: 5px;" [disabled]="audioUrl.length === 0" (click)="post()">Post</button>
+      </div>
+
+      <div>
+        <div *ngFor="let post of user.getPosts()">
+          <post [post]="post" (onDelete)="user.deletePost($event)"></post>
+        </div>
       </div>
     </div>
   </div>
