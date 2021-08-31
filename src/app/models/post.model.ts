@@ -4,12 +4,12 @@ export class Post {
   private likesCount: number = 0;
   private dislikesCount: number = 0;
   private playCount: number = 0;
-  private audioURL: string;
+  private audio: HTMLAudioElement;
 
-  constructor(audioURL: string) {
+  constructor(url: string) {
     Post.id++;
     this.id = Post.id;
-    this.audioURL = audioURL;
+    this.audio = new Audio(url);
   }
 
   public getLikesCount(): number {
@@ -36,8 +36,8 @@ export class Post {
     this.playCount++;
   }
 
-  public getAudio(): string {
-    return this.audioURL;
+  public getAudio(): HTMLAudioElement {
+    return this.audio;
   }
 
   public getId(): number {
