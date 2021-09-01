@@ -1,13 +1,13 @@
 <div>
-  <audio controls>
+  <!-- <audio controls>
     <source [src]="post.getAudio().src" type="audio/mpeg">
    O browser não suporta audio.
-  </audio>
+  </audio> -->
 
   <p>{{ post.getAudio().src }} - {{ post.getId() }}</p>
   <p>{{ post.getLikesCount() }} likes | {{ post.getDislikesCount() }} dislikes </p>
 
-  <button (click)="post.getAudio().play">Play</button>
+  <button (click)="post.getAudio().play()">Play</button>
 
   <div style="display: flex;">
     <button style="margin-right: 5px;" (click)="delete()">Delete Post</button>
