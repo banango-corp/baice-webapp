@@ -5,18 +5,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
-import { RouterModule } from './router.module';
+import { AppRouterModule } from './router.module';
+import { NewPostComponent } from './components/new-post/new-post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedComponent,
-    PostComponent
+    PostComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule,
-    FormsModule
+    FormsModule,
+    AppRouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

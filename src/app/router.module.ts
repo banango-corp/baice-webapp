@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule as AngularRouterModule } from "@angular/router";
+import { Routes, RouterModule } from "@angular/router";
 import { FeedComponent } from "./components/feed/feed.component";
 
 const routes: Routes = [
@@ -8,9 +8,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [AngularRouterModule.forRoot(routes)],
-  exports: [AngularRouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class RouterModule {
+export class AppRouterModule {
 
 }

@@ -11,6 +11,8 @@ export class PostComponent implements OnInit {
   @Input() post!: Post;
   @Output() onDelete = new EventEmitter<number>();
 
+  public isPlaying: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -18,6 +20,11 @@ export class PostComponent implements OnInit {
 
   public delete() {
     this.onDelete.emit(this.post.getId());
+  }
+
+  public play() {
+    this.isPlaying = true; // Quando/como setar em false?
+    this.post.getAudio().play();
   }
 
 }

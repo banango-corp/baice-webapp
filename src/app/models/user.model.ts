@@ -4,7 +4,7 @@ export class User {
   private username: string;
   private followerCount: number;
   private followingCount: number;
-  private posts: Post[] = [];
+  public posts: Post[] = [];
 
   //TODO: Adicionar lista de seguidores
   // private followers: number[]; // Array de IDs?
@@ -36,15 +36,6 @@ export class User {
     if (this.followerCount > 0) {
       this.followerCount--;
     }
-  }
-
-  public getPosts(): Post[] {
-    return this.posts;
-  }
-
-  public post(audioURL: string) {
-    let newPost = new Post(audioURL);
-    this.posts.push(newPost);
   }
 
   public deletePost(id: number): boolean {

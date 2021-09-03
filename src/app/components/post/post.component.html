@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="post">
   <!-- <audio controls>
     <source [src]="post.getAudio().src" type="audio/mpeg">
    O browser não suporta audio.
@@ -7,10 +7,9 @@
   <p>{{ post.getAudio().src }} - {{ post.getId() }}</p>
   <p>{{ post.getLikesCount() }} likes | {{ post.getDislikesCount() }} dislikes </p>
 
-  <button (click)="post.getAudio().play()">Play</button>
-
   <div style="display: flex;">
-    <button style="margin-right: 5px;" (click)="delete()">Delete Post</button>
+    <button style="margin-right: 10px;" (click)="post.getAudio().play()">Play</button>
+    <button style="margin-right: 5px;" (click)="delete()">Delete</button>
     <button style="margin-right: 5px;" (click)="post.like()">Like</button>
     <button (click)="post.dislike()">Dislike</button>
   </div>
