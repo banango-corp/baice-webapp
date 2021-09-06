@@ -1,0 +1,4 @@
+<div>
+  <button (click)="isRecording ? stop() : record()">{{ isRecording ? 'stop' : 'start' }}</button>
+  <span style="margin-left: 5px;" *ngIf="isRecording">Gravando...</span>
+</div>
