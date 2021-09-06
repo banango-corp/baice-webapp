@@ -9,6 +9,8 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./new-post.component.css']
 })
 export class NewPostComponent implements OnInit {
+
+  //TODO: ADICIONAR LIMITE DE TEMPO PARA GRAVAÇÃO
   public isRecording: boolean = false;
   private recorder!: { start(): void; stop(): Observable<HTMLAudioElement>; };
 

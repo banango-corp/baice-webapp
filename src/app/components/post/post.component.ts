@@ -23,7 +23,7 @@ export class PostComponent implements OnInit {
   }
 
   public play() {
-    this.isPlaying = true; // Quando/como setar em false?
+    this.isPlaying = true; //TODO: Quando/como setar em false?
     this.post.getAudio().play();
   }
 

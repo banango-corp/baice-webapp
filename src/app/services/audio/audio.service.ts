@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PostService } from '../post/post.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AudioService {
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   public recorder() {
     return new Observable<{ start(): void, stop(): Observable<HTMLAudioElement> }>((subscriber) => {
@@ -28,8 +29,6 @@ export class AudioService {
           subscriber.complete();
         });
 
-
-
         const start = (): void => {
           console.log('mediaRecorder start');
           mediaRecorder.start();
@@ -39,13 +38,24 @@ export class AudioService {
           return new Observable((subscriber) => {
             // Convert the audio data chunks to a single audio
             mediaRecorder.addEventListener('stop', () => {
-              const audioBlob = new Blob(audioChunks);
-              const audioUrl = URL.createObjectURL(audioBlob);
-              audio = new Audio(audioUrl);
-              // audio.play();
-              console.log('Audio', audio);
-              subscriber.next(audio);
-              subscriber.complete();
+              const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+
+              //TODO: APENAS SALVAR NO BANCO DEPOIS QUE O USUÁRIO CONFIRMAR (ELE PODE QUERER CANCELAR)
+              this.postService
+              .post(audioBlob)
+              .subscribe( //TODO: ADICIONAR VALIDAÇÃO DE ERRO
+                ((response: any) => {
+                  console.log(response);
+                  const audioUrl = URL.createObjectURL(audioBlob);
+                  audio = new Audio(response['audioURL']);
+                  // audio.play();
+                  console.log('Audio', audio);
+                  subscriber.next(audio);
+                  subscriber.complete();
+                })
+              );
+
+
             });
             mediaRecorder.stop();
           });
