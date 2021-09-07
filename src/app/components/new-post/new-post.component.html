@@ -1,4 +1,12 @@
 <div>
   <button (click)="isRecording ? stop() : record()">{{ isRecording ? 'stop' : 'start' }}</button>
   <span style="margin-left: 5px;" *ngIf="isRecording">Gravando...</span>
+  <span style="margin-left: 5px;" *ngIf="isRecording">{{ timeCount }}s</span>
+</div>
+
+<div *ngIf="newAudio">
+  <p>{{ newAudio.src }}</p>
+  <button (click)="newAudio.play()">Play</button>
+  <button (click)="deleteAudio()">Delete</button>
+  <button (click)="post()">Post</button>
 </div>

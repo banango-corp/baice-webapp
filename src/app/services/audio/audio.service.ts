@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PostService } from '../post/post.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AudioService {
 
-  constructor(private postService: PostService) { }
+  constructor() { }
 
   public recorder() {
-    return new Observable<{ start(): void, stop(): Observable<HTMLAudioElement> }>((subscriber) => {
+    return new Observable<{ start(): void, stop(): Observable<{ audio: HTMLAudioElement, file: Blob}> }>((subscriber) => {
       navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream: MediaStream) => {
@@ -34,29 +33,19 @@ export class AudioService {
           mediaRecorder.start();
         }
 
-        const stop = (): Observable<HTMLAudioElement> => {
+        const stop = (): Observable<{ audio: HTMLAudioElement, file: Blob}> => {
           return new Observable((subscriber) => {
             // Convert the audio data chunks to a single audio
             mediaRecorder.addEventListener('stop', () => {
               const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+              const audioUrl = URL.createObjectURL(audioBlob);
+              audio = new Audio(audioUrl);
 
-              //TODO: APENAS SALVAR NO BANCO DEPOIS QUE O USUÁRIO CONFIRMAR (ELE PODE QUERER CANCELAR)
-              this.postService
-              .post(audioBlob)
-              .subscribe( //TODO: ADICIONAR VALIDAÇÃO DE ERRO
-                ((response: any) => {
-                  console.log(response);
-                  const audioUrl = URL.createObjectURL(audioBlob);
-                  audio = new Audio(response['audioURL']);
-                  // audio.play();
-                  console.log('Audio', audio);
-                  subscriber.next(audio);
-                  subscriber.complete();
-                })
-              );
-
-
+              // Enviando o áudio e o Blob para posterior salvamento no DB
+              subscriber.next({ audio, file: audioBlob });
+              subscriber.complete();
             });
+
             mediaRecorder.stop();
           });
         }
