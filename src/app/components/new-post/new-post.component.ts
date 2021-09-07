@@ -58,6 +58,8 @@ export class NewPostComponent implements OnInit {
 
   public post() {
     // TODO postar no backed
+    this.userService.post(this.newAudio.src);
+    this.newAudio = null as any;
   }
 
   /**

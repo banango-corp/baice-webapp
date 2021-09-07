@@ -16,6 +16,12 @@ export class PostComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (this.post) {
+      this.post.getAudio().addEventListener('ended', () => {
+        console.log('audio has ended');
+        this.isPlaying = false;
+      })
+    }
   }
 
   public delete() {
@@ -23,7 +29,7 @@ export class PostComponent implements OnInit {
   }
 
   public play() {
-    this.isPlaying = true; //TODO: Quando/como setar em false?
+    this.isPlaying = true;
     this.post.getAudio().play();
   }
 
