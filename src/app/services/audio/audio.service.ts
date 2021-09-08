@@ -46,6 +46,8 @@ export class AudioService {
               subscriber.complete();
             });
 
+            // Parar o microfone e a gravação
+            stream.getTracks().forEach(track => track.stop());
             mediaRecorder.stop();
           });
         }
