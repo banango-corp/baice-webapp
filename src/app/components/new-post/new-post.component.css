@@ -19,32 +19,52 @@
   font-size: 1rem;
 }
 
-.mic-btn {
-  background-color: rgba(52, 172, 224, 1);;
+.round-btn {
   padding: 0.5rem;
   width: 3rem;
   height: 3rem;
   border-radius: 50px;
+  margin: 0 2px;
 }
 
-.mic-btn:hover {
+.round-btn:hover {
   cursor: pointer;
   width: 3.3rem;
   height: 3.3rem;
   transition: all 0.1s ease-out;
 }
 
-.mic-btn svg {
+.round-btn.blue {
+  background-color: rgba(52, 172, 224, 1);;
+}
+
+.round-btn.red {
+  background-color: rgba(255, 82, 82, 1);
+}
+
+.round-btn.green {
+  background: rgba(51, 217, 178, 1);
+}
+
+.round-btn svg {
   fill: white;
 }
 
 .recording {
-  box-shadow: 0 0 0 0 rgba(52, 172, 224, 1);
-	transform: scale(1);
-	animation: pulse 2s infinite;
+  transform: scale(1);
 }
 
-@keyframes pulse {
+.recording.blue {
+  box-shadow: 0 0 0 0 rgba(52, 172, 224, 1);
+	animation: pulse-blue 2s infinite;
+}
+
+.recording.blue {
+  box-shadow: 0 0 0 0 rgba(51, 217, 178, 1);
+	animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-blue {
 	0% {
 		transform: scale(0.95);
 		box-shadow: 0 0 0 0 rgba(52, 172, 224, 0.7);
@@ -59,4 +79,21 @@
 		transform: scale(0.95);
 		box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
 	}
+}
+
+@keyframes pulse-green {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(51, 217, 178, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(51, 217, 178, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
+  }
 }

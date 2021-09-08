@@ -1,0 +1,47 @@
+.round-btn {
+  padding: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50px;
+}
+
+.round-btn svg {
+  fill: white;
+}
+
+.round-btn:hover {
+  cursor: pointer;
+  width: 3.3rem;
+  height: 3.3rem;
+  transition: all 0.1s ease-out;
+}
+
+.round-btn.blue {
+  background-color: rgba(52, 172, 224, 1);;
+}
+
+.playing {
+  transform: scale(1);
+}
+
+.playing.blue {
+  box-shadow: 0 0 0 0 rgba(52, 172, 224, 1);
+	animation: pulse-blue 2s infinite;
+}
+
+@keyframes pulse-blue {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(52, 172, 224, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(51, 217, 178, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
+	}
+}
