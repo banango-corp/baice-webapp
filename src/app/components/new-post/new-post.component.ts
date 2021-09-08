@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { AudioService } from 'src/app/services/audio/audio.service';
 import { PostService } from 'src/app/services/post/post.service';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'new-post',
@@ -17,7 +16,7 @@ export class NewPostComponent implements OnInit {
   public newPost!: Post;
   public timeCount: number = 0;
 
-  private timeLimit: number = 30000; // 30000ms = 30s
+  private timeLimit: number = 30; // 30s
   private interval: any;
   private audioFile!: Blob;
 
@@ -83,8 +82,7 @@ export class NewPostComponent implements OnInit {
     this.interval = setInterval(() => {
       this.timeCount++;
       if (this.timeCount === this.timeLimit) {
-        // Parar a contagem se o limite de tempo chegar a 1 minuto
-        this.stopTimeCount();
+        this.stop();
       }
     }, 1000);
   }
