@@ -29,7 +29,6 @@ export class NewPostComponent implements OnInit {
 
   constructor(
     private audioService: AudioService,
-    private userService: UserService,
     private postService: PostService
   ) { }
 
@@ -65,9 +64,9 @@ export class NewPostComponent implements OnInit {
     this.postService
     .post(this.audioFile)
     .subscribe(
-      (response: Post) => {
-        //TODO o que fazer com o response
-        console.log(response);
+      (post: Post) => {
+        console.log(post);
+        this.postService.posts.unshift(post)
         this.newAudio = null as any;
       },
       (error) => {
