@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
 
 
@@ -9,7 +9,8 @@ import { Post } from 'src/app/models/post.model';
 })
 export class PostComponent implements OnInit {
   @Input() post!: Post;
-  @Output() onDelete = new EventEmitter<number>();
+
+  public audio!: HTMLAudioElement;
 
   public isPlaying: boolean = false;
 
@@ -17,20 +18,16 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.post) {
-      this.post.getAudio().addEventListener('ended', () => {
-        console.log('audio has ended');
+      this.audio = new Audio(this.post.audioURL);
+      this.audio.addEventListener('ended', () => {
         this.isPlaying = false;
       })
     }
   }
 
-  public delete() {
-    this.onDelete.emit(this.post.getId());
-  }
-
   public play() {
     this.isPlaying = true;
-    this.post.getAudio().play();
+    this.audio.play();
   }
 
 }

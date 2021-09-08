@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { AudioService } from 'src/app/services/audio/audio.service';
+import { PostService } from 'src/app/services/post/post.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -26,7 +27,11 @@ export class NewPostComponent implements OnInit {
     stop(): Observable<{ audio: HTMLAudioElement, file: Blob }>;
   };
 
-  constructor(private audioService: AudioService, private userService: UserService) { }
+  constructor(
+    private audioService: AudioService,
+    private userService: UserService,
+    private postService: PostService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -57,9 +62,19 @@ export class NewPostComponent implements OnInit {
   }
 
   public post() {
-    // TODO postar no backed
-    this.userService.post(this.newAudio.src);
-    this.newAudio = null as any;
+    this.postService
+    .post(this.audioFile)
+    .subscribe(
+      (response: Post) => {
+        //TODO o que fazer com o response
+        console.log(response);
+        this.newAudio = null as any;
+      },
+      (error) => {
+        //TODO implementar validação de erro
+        console.log(error);
+      }
+    );
   }
 
   /**

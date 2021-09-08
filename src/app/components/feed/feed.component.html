@@ -1,11 +1,11 @@
 <div class="container-flex">
   <div class="row">
-    <div class="col" style="border-left: 1px solid gray;">
+    <div class="col">
       <new-post></new-post>
 
-      <div>
-        <div *ngFor="let post of user.posts">
-          <post [post]="post" (onDelete)="user.deletePost($event)"></post>
+      <div style="margin-top: 16px;">
+        <div *ngFor="let post of posts">
+          <post [post]="post"></post>
         </div>
       </div>
     </div>
