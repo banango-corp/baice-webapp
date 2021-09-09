@@ -8,13 +8,15 @@ import { FeedComponent } from './components/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
 import { AppRouterModule } from './router.module';
 import { NewPostComponent } from './components/new-post/new-post.component';
+import { AudioComponent } from './components/audio/audio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedComponent,
     PostComponent,
-    NewPostComponent
+    NewPostComponent,
+    AudioComponent
   ],
   imports: [
     BrowserModule,
