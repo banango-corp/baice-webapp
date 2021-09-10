@@ -1,0 +1,16 @@
+.post {
+  margin: 1rem 0;
+  border: 1px solid lightgray;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+}
+
+.likes-count {
+  margin: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.likes-count > span {
+  margin-right: 5px;
+}

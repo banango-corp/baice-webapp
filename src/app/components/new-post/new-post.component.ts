@@ -15,6 +15,8 @@ export class NewPostComponent implements OnInit {
   public newAudio!: HTMLAudioElement;
   public newPost!: Post;
   public timeCount: number = 0;
+  public error: boolean = false;
+  public uploading: boolean = false;
 
   private timeLimit: number = 30; // 30s
   private interval: any;
@@ -57,22 +59,34 @@ export class NewPostComponent implements OnInit {
 
   public deleteAudio() {
     this.newAudio = null as any;
+    this.error = false;
   }
 
   public post() {
-    this.postService
-    .post(this.audioFile)
-    .subscribe(
-      (post: Post) => {
-        console.log(post);
-        this.postService.posts.unshift(post)
-        this.newAudio = null as any;
-      },
-      (error) => {
-        //TODO implementar validação de erro
-        console.log(error);
-      }
-    );
+    /**
+     * Condição para impedir o usuário de realizar várias requisições
+     * ao back-end enquanto uma já está em andamento
+     */
+    if (!this.uploading) {
+      this.error = false;
+      this.uploading = true;
+      this.postService
+      .post(this.audioFile)
+      .subscribe(
+        (post: Post) => {
+          console.log(post);
+          this.postService.posts.unshift(post)
+          this.newAudio = null as any;
+          this.uploading = false;
+        },
+        (error) => {
+          this.error = true;
+          this.uploading = false;
+          console.log(error);
+        }
+      );
+    }
+
   }
 
   /**

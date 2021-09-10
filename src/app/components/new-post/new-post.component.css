@@ -1,3 +1,18 @@
+.new-audio-options {
+  display: flex;
+  justify-content: center;
+}
+
+.new-audio-options > div {
+  width: 50%;
+  min-width: 300px;
+  position: relative;
+  display: flex;
+  border: 1px solid lightgray;
+  padding: 0.5rem;
+  border-radius: 50px;
+}
+
 .new-audio {
   padding: 0.5rem;
   padding-left: 2rem;
