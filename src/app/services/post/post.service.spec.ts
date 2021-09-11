@@ -5,9 +5,10 @@ import { PostService } from './post.service';
 describe('AudioService', () => {
   let service: PostService;
 
+  let httpClientMock = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(PostService);
+    service = new PostService(httpClientMock);
   });
 
   it('should be created', () => {
