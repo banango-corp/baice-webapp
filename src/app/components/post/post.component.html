@@ -11,7 +11,7 @@
   </div>
 
   <div style="display: flex;">
-    <button type="button" class="btn btn-danger" style="margin-right: 5px;" disabled>Delete</button>
-    <button type="button" class="btn btn-primary" disabled>Like</button>
+    <button type="button" class="btn btn-danger" style="margin-right: 5px;" [disabled]="isDeleting" (click)="delete()">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="updateLikeStatus()">Like</button>
   </div>
 </div>

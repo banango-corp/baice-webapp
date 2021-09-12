@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
+import { PostService } from 'src/app/services/post/post.service';
 
 
 @Component({
@@ -10,24 +11,50 @@ import { Post } from 'src/app/models/post.model';
 export class PostComponent implements OnInit {
   @Input() post!: Post;
 
+  /**
+   * Emite um sinal para que o Feed seja recarregado
+   */
+  @Output() onDelete = new EventEmitter<void>();
+
   public audio!: HTMLAudioElement;
 
-  public isPlaying: boolean = false;
+  public isDeleting: boolean = false;
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
     if (this.post) {
       this.audio = new Audio(this.post.audioURL);
-      this.audio.addEventListener('ended', () => {
-        this.isPlaying = false;
-      })
     }
   }
 
-  public play() {
-    this.isPlaying = true;
-    this.audio.play();
+  public delete() {
+    this.isDeleting = true;
+    this.postService.delete(this.post.id)
+    .subscribe(
+      () => {
+        console.log('post deletado com sucesso');
+        this.onDelete.emit();
+      },
+      () => {
+        //TODO: validação de erro
+        console.log('não foi possível deletar o post');
+        this.isDeleting = false;
+      }
+    );
   }
 
+  public updateLikeStatus() {
+    this.postService.updateLikeStatus(this.post.id)
+    .subscribe(
+      (updatedPost) => {
+        console.log('post atualizado com sucesso', updatedPost);
+        this.post = updatedPost;
+      },
+      () => {
+        // TODO: validação de erro
+        console.log('erro ao atualizar post');
+      }
+    )
+  }
 }

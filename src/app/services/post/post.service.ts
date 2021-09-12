@@ -27,6 +27,22 @@ export class PostService {
     return this.http.post<Post>(`${this.url}/post`, file, { headers });
   }
 
+  public delete(id: string) {
+    const headers = new HttpHeaders();
+    headers.append('Cache-Control', 'no-cache');
+    headers.append('Sec-Fetch-Mode', 'cors');
+
+    return this.http.delete(`${this.url}/post/${id}`, { headers });
+  }
+
+  public updateLikeStatus(id: string) {
+    const headers = new HttpHeaders();
+    headers.append('Cache-Control', 'no-cache');
+    headers.append('Sec-Fetch-Mode', 'cors');
+
+    return this.http.put<Post>(`${this.url}/post/${id}/like`, {}, { headers });
+  }
+
   public getPosts() {
     const headers = new HttpHeaders();
     headers.append('Cache-Control', 'no-cache');
@@ -42,7 +58,6 @@ export class PostService {
           subscriber.complete();
         },
         (error: HttpErrorResponse) => {
-          //TODO implementar validação de erro
           subscriber.error(error);
           subscriber.complete();
         }
