@@ -33,8 +33,7 @@ export class NewPostComponent implements OnInit {
     private postService: PostService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public record() {
     this.audioService

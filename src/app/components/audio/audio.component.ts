@@ -15,6 +15,8 @@ export class AudioComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.audio) {
+      console.log(this.audio);
+
       this.audio.addEventListener('ended', () => {
         console.log('audio terminou');
         this.isPlaying = false;

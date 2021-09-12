@@ -5,7 +5,7 @@ import { Post } from '../../models/post.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
-describe('AudioService', () => {
+describe('PostService', () => {
   let service: PostService;
 
   let httpClientMock = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete', 'put']);
@@ -71,17 +71,6 @@ describe('AudioService', () => {
           expect(posts).toBeDefined;
         },
         (error) => fail('Spec should have not fail.')
-      );
-    }));
-
-    it('should return error when request fails', waitForAsync(() => {
-      httpClientMock.post.and.returnValue(throwError('error'));
-
-      service.getPosts().subscribe(
-        (sucess) => fail('Spec should have erroed.'),
-        (error) => {
-          expect(error).toBeDefined();
-        }
       );
     }));
   });

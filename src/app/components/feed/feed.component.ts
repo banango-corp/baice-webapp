@@ -57,8 +57,12 @@ export class FeedComponent implements OnInit {
    * retira o Post com o id em questão do array de Posts.
    */
   public removePostFromFeed(id: string) {
-    let postIndex = this.posts.findIndex((post) => post.id == id);
-    this.posts.splice(postIndex, 1);
+    if (id) {
+      let postIndex = this.posts.findIndex((post) => post.id == id);
+      if (postIndex > -1) {
+        this.posts.splice(postIndex, 1);
+      }
+    }
   }
 
 }
