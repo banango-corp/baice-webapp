@@ -1,0 +1,114 @@
+.new-audio-options {
+  display: flex;
+  justify-content: center;
+}
+
+.new-audio-options > div {
+  width: 50%;
+  min-width: 300px;
+  position: relative;
+  display: flex;
+  border: 1px solid lightgray;
+  padding: 0.5rem;
+  border-radius: 50px;
+}
+
+.new-audio {
+  padding: 0.5rem;
+  padding-left: 2rem;
+  border: 1px solid lightgray;
+  border-radius: 50px;
+  margin: 0 5rem;
+  height: 67px;
+  position: relative;
+}
+
+.new-audio span {
+  font-size: 1.5rem;
+  color: gray;
+}
+
+.new-audio .counter {
+  position: absolute;
+  right: 4rem;
+  font-size: 1rem;
+}
+
+.round-btn {
+  padding: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50px;
+  margin: 0 2px;
+}
+
+.round-btn:hover {
+  cursor: pointer;
+  width: 3.3rem;
+  height: 3.3rem;
+  transition: all 0.1s ease-out;
+}
+
+.round-btn.blue {
+  background-color: rgba(52, 172, 224, 1);;
+}
+
+.round-btn.red {
+  background-color: rgba(255, 82, 82, 1);
+}
+
+.round-btn.green {
+  background: rgba(51, 217, 178, 1);
+}
+
+.round-btn svg {
+  fill: white;
+}
+
+.recording {
+  transform: scale(1);
+}
+
+.recording.blue {
+  box-shadow: 0 0 0 0 rgba(52, 172, 224, 1);
+	animation: pulse-blue 2s infinite;
+}
+
+.recording.blue {
+  box-shadow: 0 0 0 0 rgba(51, 217, 178, 1);
+	animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-blue {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(52, 172, 224, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(51, 217, 178, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
+	}
+}
+
+@keyframes pulse-green {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(51, 217, 178, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(51, 217, 178, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(51, 217, 178, 0);
+  }
+}

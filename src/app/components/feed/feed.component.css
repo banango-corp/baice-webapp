@@ -1,0 +1,7 @@
+.refresh-btn {
+  width: 2rem;
+}
+
+.refresh-btn:hover {
+  cursor: pointer;
+}
