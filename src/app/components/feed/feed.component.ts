@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class FeedComponent implements OnInit {
   public user: User;
-  public posts: any;
+  public posts!: any[];
   public error: boolean = false;
   public loading: boolean = false;
 
@@ -50,6 +50,15 @@ export class FeedComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  /**
+   * Remove a necessidade de realizar um refresh ao deletar um post,
+   * retira o Post com o id em questão do array de Posts.
+   */
+  public removePostFromFeed(id: string) {
+    let postIndex = this.posts.findIndex((post) => post.id == id);
+    this.posts.splice(postIndex, 1);
   }
 
 }

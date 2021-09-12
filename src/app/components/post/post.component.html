@@ -12,6 +12,6 @@
 
   <div style="display: flex;">
     <button type="button" class="btn btn-danger" style="margin-right: 5px;" [disabled]="isDeleting" (click)="delete()">Delete</button>
-    <button type="button" class="btn btn-primary" (click)="updateLikeStatus()">Like</button>
+    <button type="button" class="btn btn-primary" (click)="updateLikeStatus()">{{ post.likesCount > 0 ? 'Unlike' : 'Like' }}</button>
   </div>
 </div>

@@ -40,9 +40,15 @@ export class AudioComponent implements OnInit {
   }
 
   public play() {
-    console.log('audio esta tocando');
-    this.audio.play();
-    this.isPlaying = true;
+    this.audio.play()
+    .then(() => {
+      console.log('audio esta tocando');
+      this.isPlaying = true;
+    })
+    .catch((err) => {
+      console.log('não foi possível iniciar áudio', err);
+    });
+
   }
 
   public stop() {

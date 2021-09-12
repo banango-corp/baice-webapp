@@ -12,9 +12,9 @@ export class PostComponent implements OnInit {
   @Input() post!: Post;
 
   /**
-   * Emite um sinal para que o Feed seja recarregado
+   * Emite um sinal para que o Post seja removido do Feed
    */
-  @Output() onDelete = new EventEmitter<void>();
+  @Output() onDelete = new EventEmitter<string>();
 
   public audio!: HTMLAudioElement;
 
@@ -34,7 +34,7 @@ export class PostComponent implements OnInit {
     .subscribe(
       () => {
         console.log('post deletado com sucesso');
-        this.onDelete.emit();
+        this.onDelete.emit(this.post.id);
       },
       () => {
         //TODO: validação de erro

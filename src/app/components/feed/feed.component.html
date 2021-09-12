@@ -5,7 +5,7 @@
 
       <div *ngIf="posts" style="margin-top: 16px;">
         <div *ngFor="let post of posts">
-          <post [post]="post" (onDelete)="refresh()"></post>
+          <post [post]="post" (onDelete)="removePostFromFeed($event)"></post>
         </div>
       </div>
 
