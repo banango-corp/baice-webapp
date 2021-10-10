@@ -40,9 +40,9 @@ module.exports = function (config) {
     loggers: [
       { type: 'console' }
     ],
-    autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false, // If true, Karma will start and capture all configured browsers, run tests and then exit with an exit code of 0 or 1 depending on whether all tests passed or any tests failed.
+    autoWatch: false,
+    browsers: ['ChromeHeadless'],
+    singleRun: true, // If true, Karma will start and capture all configured browsers, run tests and then exit with an exit code of 0 or 1 depending on whether all tests passed or any tests failed.
     restartOnFileChange: false,
     failOnFailingTestSuite: false, // Enable or disable failure on failing tests.
   });
