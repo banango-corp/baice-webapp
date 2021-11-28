@@ -5,12 +5,15 @@ import { User } from '../../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  private loggedUser!: User;
-  constructor() {
-    this.loggedUser = new User('babieste');
+  private _user!: User;
+
+  constructor() {}
+
+  set user(_user: User) {
+    this._user = _user;
   }
 
-  public getUser(): User {
-    return this.loggedUser;
+  get user(): User {
+    return this._user;
   }
 }

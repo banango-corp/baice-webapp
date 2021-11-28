@@ -11,10 +11,11 @@ import { NewPostComponent } from './components/new-post/new-post.component';
 import { AudioComponent } from './components/audio/audio.component';
 import { LoginComponent } from './components/login/login.component';
 import { InterceptorModule } from './interceptor/interceptor.module';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: FeedComponent },
+  { path: 'home', component: FeedComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 

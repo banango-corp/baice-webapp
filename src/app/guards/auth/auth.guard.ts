@@ -1,0 +1,27 @@
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { AuthService } from "src/app/services/auth/auth.service";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+
+    constructor(private authService: AuthService, private router: Router) {}
+
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+        const url = state.url;
+
+        console.log('[AuthGuard] usuário está logado?', this.authService.isLoggedIn());
+
+        if (this.authService.isLoggedIn()) {
+            if (url == '/login') {
+                return this.router.parseUrl('/home');
+            } else {
+                return true;
+            }
+        } else {
+            return this.router.parseUrl('login');
+        }
+    }
+}

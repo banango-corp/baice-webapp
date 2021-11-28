@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
-import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/post/post.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -11,15 +11,21 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
-  public user: User;
   public posts!: any[];
   public error: boolean = false;
   public loading: boolean = false;
+  public username!: string;
 
   private postsSubscription!: Subscription;
 
-  constructor(private userService: UserService, private postService: PostService) {
-    this.user = this.userService.getUser();
+  constructor(
+    private postService: PostService,
+    private userService: UserService,
+    private authService: AuthService
+  ) {
+    if (authService.isLoggedIn()) {
+      // this.username = this.userService.user.getUsername();
+    }
   }
 
   ngOnInit() {
@@ -63,6 +69,10 @@ export class FeedComponent implements OnInit {
         this.posts.splice(postIndex, 1);
       }
     }
+  }
+
+  public logout() {
+    this.authService.logout();
   }
 
 }

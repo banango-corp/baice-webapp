@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login() {
     const formValues = this.form.value;
