@@ -14,7 +14,7 @@ import { InterceptorModule } from './interceptor/interceptor.module';
 import { AuthGuard } from './guards/auth/auth.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
   { path: 'home', component: FeedComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];

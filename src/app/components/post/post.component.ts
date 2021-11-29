@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/post/post.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 
 @Component({
@@ -20,7 +22,14 @@ export class PostComponent implements OnInit {
 
   public isDeleting: boolean = false;
 
-  constructor(private postService: PostService) { }
+  public loggedInUsername!: string;
+
+  constructor(private postService: PostService, private authService: AuthService) {
+    let loggedInUser = this.authService.getLoggedInUser();
+    if (loggedInUser) {
+      this.loggedInUsername = loggedInUser.getUsername();
+    }
+  }
 
   ngOnInit(): void {
     if (this.post) {

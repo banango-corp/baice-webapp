@@ -10,6 +10,7 @@ export class UserService {
   constructor() {}
 
   set user(_user: User) {
+    console.log('[UserService] user created -', _user);
     this._user = _user;
   }
 

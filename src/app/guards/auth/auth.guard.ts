@@ -12,8 +12,6 @@ export class AuthGuard implements CanActivate {
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
         const url = state.url;
 
-        console.log('[AuthGuard] usuário está logado?', this.authService.isLoggedIn());
-
         if (this.authService.isLoggedIn()) {
             if (url == '/login') {
                 return this.router.parseUrl('/home');
@@ -21,6 +19,7 @@ export class AuthGuard implements CanActivate {
                 return true;
             }
         } else {
+            sessionStorage.clear();
             return this.router.parseUrl('login');
         }
     }

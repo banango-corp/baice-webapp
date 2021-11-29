@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
 
   form!: FormGroup;
+  error: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,12 +28,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
+    this.error = false;
+    this.loading = true;
+
     const formValues = this.form.value;
 
-    this.authService.login(formValues.username, formValues.password).subscribe(
+    this.authService
+    .login(formValues.username, formValues.password)
+    .subscribe(
       () => this.router.navigateByUrl('/'),
       () => {
-        //TODO validação de erro
+        this.error = true;
+        this.loading = false;
       }
     );
   }

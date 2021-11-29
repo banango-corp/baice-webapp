@@ -2,47 +2,83 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { User } from 'src/app/models/user.model';
-import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
+
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+interface LoginResponse {
+  token: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private admin = {
-    username: 'admin',
-    password: 'admin'
-  };
+  private url = environment.apiUrl;
+  private user!: User;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   public login (username: string, password: string) {
     return new Observable((subscriber) => {
-      //TODO validação será feita pelo back-end
-      if (username === this.admin.username && password === this.admin.password) {
-        this.setSession({ token: 'teste', expiresIn: '300' });
+      // Converter token de autenticação em base64
+      const token = btoa(`${username}:${password}`);
 
-        const user = new User(username);
-        this.userService.user = user;
+      // Adicionar token ao header
+      const headers = new HttpHeaders({
+        'Authorization': `Basic ${token}`
+      });
 
-        subscriber.next();
-        subscriber.complete();
-      } else {
-        subscriber.error();
-        subscriber.complete();
-      }
+      this.http
+      .post<LoginResponse>(`${this.url}/login`, null, { headers })
+      .subscribe(
+        (response: LoginResponse) => {
+          
+          if (response.token) {
+            this.setSession({ token: response.token, expiresIn: '300' });
+
+            let userAdded = this.setUser(response.token);
+            if (userAdded) {
+              subscriber.next();
+              subscriber.complete();
+            } else {
+              subscriber.error();
+              subscriber.complete();
+            }
+          } else {
+            subscriber.error();
+            subscriber.complete();
+          }
+        },
+        (error) => {
+          console.log('[AuthService] error:', error);
+
+          subscriber.error();
+          subscriber.complete();
+        }
+      );
     });
   }
 
   public logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expires_at');
+    this.http
+    .post(`${this.url}/logout`, null)
+    .subscribe(
+      () => {
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('expires_at');
+        this.router.navigateByUrl('/login');
+      }
+    );
 
-    this.router.navigateByUrl('/login');
   }
 
-  public isLoggedIn() {
+  public isLoggedIn(): boolean {
     const isLoggedIn = moment().isBefore(this.getExpiration());
 
     console.log('[AuthService] usuário está logado -', isLoggedIn);
@@ -50,21 +86,47 @@ export class AuthService {
     return isLoggedIn;
   }
 
+  public setUser(token: string): boolean {
+    let userObj = this.decryptToken(token);
+    if (userObj) {
+      this.user = new User(userObj['username'], userObj['role']);
+      return true;
+    }
+    return false;
+  }
+
+  public getLoggedInUser() {
+    if (this.isLoggedIn()) {
+      return this.user;
+    }
+    return null;
+  }
+
   private setSession(response: { token: string, expiresIn: string}) {
     const expiresAt = moment().add(response.expiresIn, 'seconds');
 
-    localStorage.setItem('token', response.token);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    sessionStorage.setItem('token', response.token);
+    sessionStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 
-    console.log('[AuthService] sessão iniciada - token', response.token, 'duração -', response.expiresIn);
+    console.log('[AuthService] sessão iniciada - token', response.token);
   }
 
   private getExpiration() {
-    const expiration = localStorage.getItem('expires_at') as string;
+    const expiration = sessionStorage.getItem('expires_at') as string;
     const expiresAt = JSON.parse(expiration);
 
-    console.log('[AuthService] expira em -', moment(expiresAt));
+    console.log('[AuthService] token expira em', moment(expiresAt));
 
     return moment(expiresAt);
+  }
+
+  private decryptToken(token: string): any | null {
+    try {
+      const data = token.split('.');
+      let response = atob(data[1]);
+      return JSON.parse(response);
+    } catch (error) {
+      return null;
+    }
   }
 }

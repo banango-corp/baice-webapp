@@ -1,5 +1,5 @@
 <div *ngIf="post" class="post">
-  <p>Post {{ post.id }}</p>
+  <p>Post {{ post.id }} - Criado por {{ post.username }}</p>
 
   <app-audio [audio]="audio"></app-audio>
 
@@ -11,7 +11,8 @@
   </div>
 
   <div style="display: flex;">
-    <button type="button" class="btn btn-danger" style="margin-right: 5px;" [disabled]="isDeleting" (click)="delete()">Delete</button>
-    <button type="button" class="btn btn-primary" (click)="updateLikeStatus()">{{ post.likesCount > 0 ? 'Unlike' : 'Like' }}</button>
+    <div *ngIf="loggedInUsername === post.username || loggedInUsername === 'admin1'">
+      <button type="button" class="btn btn-danger" style="margin-right: 5px;" [disabled]="isDeleting" (click)="delete()">Delete</button>
+    </div>
   </div>
 </div>
