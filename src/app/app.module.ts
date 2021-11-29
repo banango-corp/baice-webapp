@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,9 +9,13 @@ import { FeedComponent } from './components/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
 import { AudioComponent } from './components/audio/audio.component';
+import { LoginComponent } from './components/login/login.component';
+import { InterceptorModule } from './interceptor/interceptor.module';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 const routes: Routes = [
-  { path: 'home', component: FeedComponent },
+  { path: 'login', component: LoginComponent},
+  { path: 'home', component: FeedComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
@@ -21,13 +25,16 @@ const routes: Routes = [
     FeedComponent,
     PostComponent,
     NewPostComponent,
-    AudioComponent
+    AudioComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
+    InterceptorModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   schemas: [
